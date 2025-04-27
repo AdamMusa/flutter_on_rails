@@ -1,0 +1,55 @@
+# name: Build Flutter on Rails
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   build:
+#     name: Build iOS and Android
+#     runs-on: macos-latest
+#     env:
+#       CI: true
+
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v3
+
+#     # Set up Flutter
+#     - name: Set up Flutter
+#       uses: subosito/flutter-action@v2
+#       with:
+#         flutter-version: '3.24.3'  # Specify the Flutter version you need
+
+#     - name: Install dependencies
+#       run: flutter pub get
+
+#     # Build Android APK
+#     - name: Build Android APK
+#       run: flutter build apk --release
+
+#     # Upload Android APK
+#     - name: Upload Android APK
+#       uses: actions/upload-artifact@v3
+#       with:
+#         name: android-apk
+#         path: build/app/outputs/flutter-apk/app-release.apk
+
+#     # Set up Xcode and CocoaPods for iOS
+#     - name: Set up Xcode
+#       run: |
+#         sudo gem install cocoapods
+#         cd ios
+#         pod install
+
+#     # Build iOS app
+#     - name: Build iOS App
+#       run: flutter build ios --release --no-codesign
+
+#     # Upload iOS Build (IPA file)
+#     - name: Upload iOS Build
+#       uses: actions/upload-artifact@v3
+#       with:
+#         name: ios-build
+#         path: build/ios/iphoneos/Runner.app  # Adjust this path if you export IPA later
