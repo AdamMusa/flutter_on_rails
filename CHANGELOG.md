@@ -1,4 +1,4 @@
-## 0.0.1-beta.1
+## 0.0.1-alpha
 
 - Initial beta release of flutter_on_rails package
 - Added basic widget parsing functionality
