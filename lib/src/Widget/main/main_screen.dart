@@ -84,8 +84,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("Rebuilding ...");
-    print("Get ${provider.state.navapi} ...");
     if (provider.state.isConnectivity) {
       return const SizedBox();
     }
@@ -152,7 +150,6 @@ class _MainScreenState extends State<MainScreen> {
                       callback: (args) {
                         final actionJson = args[0]; // Your JSON string
                         provider.setNavApi(json.decode(actionJson));
-                        print("Received from JS: ${json.decode(actionJson)}");
                         // You can parse and use this in Flutter
                       },
                     );
@@ -223,8 +220,6 @@ class _MainScreenState extends State<MainScreen> {
                     controller,
                     navigationAction,
                   ) async {
-                    final url = navigationAction.request.url;
-
                     return NavigationActionPolicy.ALLOW;
                   },
                 ),

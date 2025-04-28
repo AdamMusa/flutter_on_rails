@@ -66,6 +66,7 @@ class ListViewWidgetParser extends WidgetParser {
 
 class ListViewWidget extends StatefulWidget {
   final ListViewParams _params;
+  // ignore: unused_field
   final BuildContext _buildContext;
 
   const ListViewWidget(this._params, this._buildContext, {super.key});

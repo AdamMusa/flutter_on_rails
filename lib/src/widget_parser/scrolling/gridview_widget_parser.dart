@@ -79,6 +79,7 @@ class GridViewWidgetParser extends WidgetParser {
 class GridViewWidget extends StatefulWidget {
   final GridViewParams _params;
 
+  // ignore: unused_field
   final BuildContext _buildContext;
 
   const GridViewWidget(this._params, this._buildContext, {super.key});
