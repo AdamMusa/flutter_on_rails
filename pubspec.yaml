@@ -1,6 +1,6 @@
 name: flutter_on_rails
 description: "Flutter on rails is the fastest way to bridge your web app with a Flutter-powered for cross plateform mobile and desktop app with ease and minimal changes, maximum freedom"
-version: 0.0.1-beta.1
+version: 0.0.1-alpha
 homepage: https://github.com/AdamMusa/flutter_on_rails
 
 environment:
@@ -8,8 +8,6 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   cupertino_icons: ^1.0.8
   share_plus: ^10.0.2
   flutter_inappwebview: ^6.2.0-beta.2
@@ -19,6 +17,10 @@ dependencies:
   minimal_mvn: ^2.0.1
   url_launcher: ^6.3.1
   dart_mappable: ^4.5.0
+
+
+  flutter:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +33,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+flutter:
 
   # To add assets to your package, add an assets section, like this:
   # assets:
