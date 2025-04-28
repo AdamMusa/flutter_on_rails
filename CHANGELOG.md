@@ -1,10 +1,10 @@
-## 0.0.1-alpha
+## 0.0.2-alpha
 
 - Initial beta release of flutter_on_rails package
 - Added basic widget parsing functionality
 - Implemented support for various Flutter widgets and properties
 - Added utility functions for parsing and exporting widget properties
 
-## 0.0.1
+## 0.0.2
 
 - TODO: Describe initial release.
