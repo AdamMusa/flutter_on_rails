@@ -4,15 +4,28 @@ part "app_state.mapper.dart";
 
 @MappableClass()
 class AppState with AppStateMappable {
-  bool isLoading = true;
-  bool isPageLoadError = false;
-  bool isConnectivity = false;
-  bool isRedirected = false;
-  double progress = 0;
-  int index = 0;
-  List<Map<String, dynamic>> links = [];
-  Map<String, dynamic> navapi = {};
-  Map<String, dynamic> form = {};
-  String appbar = '';
+  AppState({
+    this.appbar = '',
+    this.isLoading = true,
+    this.isPageLoadError = false,
+    this.isConnectivity = false,
+    this.isRedirected = false,
+    this.progress = 0,
+    this.index = 0,
+    this.links = const [],
+    this.navapi = const {},
+    this.form = const {},
+    this.controller,
+  });
+  bool isLoading;
+  bool isPageLoadError;
+  bool isConnectivity;
+  bool isRedirected;
+  double progress;
+  int index;
+  List<Map<String, dynamic>> links;
+  Map<String, dynamic> navapi;
+  Map<String, dynamic> form;
+  String appbar;
   InAppWebViewController? controller;
 }

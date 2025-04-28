@@ -1,5 +1,5 @@
-import 'package:flutterx/imports/exports.dart';
+import 'package:flutter_on_rails/src/imports/exports.dart';
 
 Future init() async {
-  await InAppWebViewController.setJavaScriptBridgeName("flutterx");
+  await InAppWebViewController.setJavaScriptBridgeName("flutter_on_rails");
 }
