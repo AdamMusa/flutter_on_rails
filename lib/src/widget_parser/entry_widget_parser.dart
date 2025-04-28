@@ -1,5 +1,3 @@
-library dynamic_widget;
-
 import 'dart:convert';
 
 import 'package:flutter_on_rails/src/widget_parser/components/align_widget_parser.dart';

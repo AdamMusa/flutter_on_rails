@@ -257,7 +257,7 @@ Map<String, dynamic>? exportTextStyle(TextStyle? textStyle) {
   }
 
   return <String, dynamic>{
-    "color": textStyle.color?.value.toRadixString(16),
+    "color": textStyle.color?.toARGB32().toRadixString(16),
     "debugLabel": textStyle.debugLabel,
     "decoration": exportTextDecoration(textStyle.decoration),
     "fontSize": textStyle.fontSize,
@@ -983,8 +983,6 @@ String? exportDropCapMod(DropCapMode? mode) {
       return "aside";
     case DropCapMode.upwards:
       return "upwards";
-    default:
-      return "inside";
   }
 }
 
@@ -1133,7 +1131,7 @@ Map<String, dynamic>? exportBorderSide(BorderSide borderSide) {
     return null;
   }
   return <String, dynamic>{
-    "color": borderSide.color.value.toRadixString(16),
+    "color": borderSide.color.toARGB32().toRadixString(16),
     "width": borderSide.width,
     "style": borderSide.style.index,
   };

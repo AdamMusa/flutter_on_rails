@@ -1,7 +1,5 @@
 // ignore_for_file: constant_identifier_names, deprecated_member_use, non_constant_identifier_names
 
-library icons_helper;
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -1053,7 +1051,7 @@ const Map<String, IconData> IconsMap = <String, IconData>{
   'youtube_searched_for': Icons.youtube_searched_for,
   'zoom_in': Icons.zoom_in,
   'zoom_out': Icons.zoom_out,
-  'zoom_out_map': Icons.zoom_out_map
+  'zoom_out_map': Icons.zoom_out_map,
 };
 
 /// Icon data map for FontAwesome (currently 5.5)
@@ -2593,5 +2591,5 @@ Map<String, IconData> FontAwesomeIconsMap = <String, IconData>{
   'yoast': FontAwesomeIcons.yoast,
   'youtube': FontAwesomeIcons.youtube,
   'youtubeSquare': FontAwesomeIcons.youtubeSquare,
-  'zhihu': FontAwesomeIcons.zhihu
+  'zhihu': FontAwesomeIcons.zhihu,
 };

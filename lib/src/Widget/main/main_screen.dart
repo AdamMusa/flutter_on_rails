@@ -213,7 +213,7 @@ class _MainScreenState extends State<MainScreen> {
                         child: NextPage(url: url.toString()),
                       );
                     }
-                    if (url != widget.url! &&
+                    if (url.toString() != widget.url! &&
                         provider.state.isRedirected == false) {}
                   },
                   shouldOverrideUrlLoading: (

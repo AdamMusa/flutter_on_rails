@@ -7,6 +7,10 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_on_rails/src/helpers/responds_to.dart';
 import 'package:flutter_on_rails/src/minimal/manager/manager.dart';
 import 'package:flutter_on_rails/src/services/run_js.dart';
+import 'package:logging/logging.dart';
+
+// Add at the top of the file, outside any class
+final _logger = Logger('NextScreen');
 
 class NextPage extends StatelessWidget {
   NextPage({super.key, required this.url});
@@ -79,13 +83,11 @@ class NextPage extends StatelessWidget {
                 provider.state.controller!.addJavaScriptHandler(
                   handlerName: "inputFocus",
                   callback: (args) async {
-                    final actionJson = args[0]; // Your JSON string
-                    // provider.setNavApi(json.decode(actionJson));
+                    final actionJson = args[0];
                     await showNativeKeyboard(json.decode(actionJson));
-                    print(
+                    _logger.info(
                       "Received from JS: ${json.decode(actionJson.toString())}",
                     );
-                    // You can parse and use this in Flutter
                   },
                 );
               },
