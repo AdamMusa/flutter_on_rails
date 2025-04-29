@@ -1,7 +1,11 @@
 import 'package:flutter_on_rails/src/imports/exports.dart';
 import '../assets/grouped_icons.dart';
 
-NavigationBar? buildBottomNavigationBar(AppNotifier provider, String url) {
+buildBottomNavigationBar(
+  BuildContext context,
+  AppNotifier provider,
+  String url,
+) {
   return (provider.state.links.length > 1)
       ? NavigationBar(
         // backgroundColor: hexToColor("#4285F4"),
@@ -24,7 +28,7 @@ NavigationBar? buildBottomNavigationBar(AppNotifier provider, String url) {
             provider
                 .state
                 .index, // Set the current index for the BottomNavigationBar
-        onDestinationSelected: (selectedIndex) async {
+        onDestinationSelected: (selectedIndex) {
           provider.setIndex(selectedIndex);
           url = provider.state.links[provider.state.index]['url'];
           // Load the corresponding URL in the WebView

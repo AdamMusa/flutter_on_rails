@@ -7,7 +7,7 @@ class RunJs {
           await provider.state.controller!.evaluateJavascript(
                 source: """
       (() => {
-        const nav = document.querySelector('#bottom-navigation');
+        const nav = document.querySelector('[data-frails-bottom-tabs]');
         if (!nav) return JSON.stringify([]);
         const links = nav.querySelectorAll('a');
 
@@ -44,7 +44,7 @@ class RunJs {
       await provider.state.controller!.evaluateJavascript(
         source: """
         (() => {
-          const nav = document.querySelector('#bottom-navigation');
+          const nav = document.querySelector('[data-frails-bottom-tabs]');
           if (nav) {
             nav.style.display = 'none';
           }
@@ -86,10 +86,10 @@ class RunJs {
     }
   }
 
-  Future<void> handleForm(AppNotifier provider) async {
+  handleForm(InAppWebViewController controller, AppNotifier provider) async {
     try {
       String? result =
-          await provider.state.controller!.evaluateJavascript(
+          await controller.evaluateJavascript(
                 source: """
     (() => {
       const div = document.querySelector('[data-frails-form]');
@@ -120,17 +120,17 @@ class RunJs {
         // You can also store it in a Provider
         provider.setFormData(formData);
 
-        // Hide the bottom navigation if it exists
-        await provider.state.controller!.evaluateJavascript(
-          source: """
-          (function() {
-            const button = document.getElementById('${provider.state.form["btn-id"]}');
-            if (button) {
-              button.style.display = 'none';
-            }
-          })();
-        """,
-        );
+        // // Hide the button if it exists
+        // controller.evaluateJavascript(
+        //   source: """
+        //   (function() {
+        //     const button = document.getElementById('${formData["btn-id"]}');
+        //     if (button) {
+        //       button.style.display = 'none';
+        //     }
+        //   })();
+        // """,
+        // );
       }
     } catch (e) {
       debugPrint('Error in handleForm: \$e');

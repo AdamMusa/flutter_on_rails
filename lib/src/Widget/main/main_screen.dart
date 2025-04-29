@@ -91,16 +91,17 @@ class _MainScreenState extends State<MainScreen> {
       return Container(color: Colors.red);
     }
 
-    return ListenableBuilder(
-      listenable: provider,
-      builder: (context, _) {
-        return SafeArea(
-          bottom: false,
-          child: Scaffold(
+    return SafeArea(
+      bottom: false,
+      child: ListenableBuilder(
+        listenable: provider,
+        builder: (context, _) {
+          return Scaffold(
             appBar:
                 provider.state.appbar != ''
                     ? CustomAppBar(payload: provider.state.appbar)
                     : null,
+
             body: Stack(
               children: [
                 if (provider.state.isLoading)
@@ -186,20 +187,20 @@ class _MainScreenState extends State<MainScreen> {
                     provider.setLoading(false);
                     await provider.state.controller!.evaluateJavascript(
                       source: """
-                        (function() {
-                          document.addEventListener("click", function(event) {
-                            // Correct selector for data_frails_action (with an underscore)
-                            const link = event.target.closest("a[data_frails_action]");
-                            console.log("Link clicked:", link);  // Check if the link is found
-                            if (!link) return;
-                            const action = link.getAttribute("data_frails_action");
-                            console.log("Action:", action); 
-                            if (window.flutter_on_rails) {
-                              window.flutter_on_rails.callHandler('actionHandler', action);
-                            }
-                          });
-                        })();
-                      """,
+                            (function() {
+                              document.addEventListener("click", function(event) {
+                                // Correct selector for data_frails_action (with an underscore)
+                                const link = event.target.closest("a[data_frails_action]");
+                                console.log("Link clicked:", link);  // Check if the link is found
+                                if (!link) return;
+                                const action = link.getAttribute("data_frails_action");
+                                console.log("Action:", action); 
+                                if (window.flutter_on_rails) {
+                                  window.flutter_on_rails.callHandler('actionHandler', action);
+                                }
+                              });
+                            })();
+                          """,
                     );
                     await RunJs().runJavaScriptAndHideBottomNav(provider);
                   },
@@ -226,12 +227,13 @@ class _MainScreenState extends State<MainScreen> {
               ],
             ),
             bottomNavigationBar: buildBottomNavigationBar(
+              context,
               provider,
               widget.url!,
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

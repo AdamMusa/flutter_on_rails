@@ -16,6 +16,7 @@ class AppState with AppStateMappable {
     this.navapi = const {},
     this.form = const {},
     this.controller,
+    this.nextScreenController,
   });
   bool isLoading;
   bool isPageLoadError;
@@ -28,4 +29,5 @@ class AppState with AppStateMappable {
   Map<String, dynamic> form;
   String appbar;
   InAppWebViewController? controller;
+  InAppWebViewController? nextScreenController;
 }

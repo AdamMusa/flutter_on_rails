@@ -16,6 +16,8 @@ class AppNotifier extends MMNotifier<AppState> {
 
   void setLoading(value) => notify(state.copyWith(isLoading: value));
   void setController(value) => notify(state.copyWith(controller: value));
+  void setNextScreenController(value) =>
+      notify(state.copyWith(nextScreenController: value));
   void setIndex(value) => notify(state.copyWith(index: value));
   void setNavigable(value) {
     Map<String, dynamic> navapi = state.navapi;

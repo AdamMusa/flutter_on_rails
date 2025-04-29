@@ -53,6 +53,10 @@ class AppStateMapper extends ClassMapperBase<AppState> {
   static InAppWebViewController? _$controller(AppState v) => v.controller;
   static const Field<AppState, InAppWebViewController> _f$controller =
       Field('controller', _$controller, opt: true);
+  static InAppWebViewController? _$nextScreenController(AppState v) =>
+      v.nextScreenController;
+  static const Field<AppState, InAppWebViewController> _f$nextScreenController =
+      Field('nextScreenController', _$nextScreenController, opt: true);
 
   @override
   final MappableFields<AppState> fields = const {
@@ -67,6 +71,7 @@ class AppStateMapper extends ClassMapperBase<AppState> {
     #navapi: _f$navapi,
     #form: _f$form,
     #controller: _f$controller,
+    #nextScreenController: _f$nextScreenController,
   };
 
   static AppState _instantiate(DecodingData data) {
@@ -81,7 +86,8 @@ class AppStateMapper extends ClassMapperBase<AppState> {
         links: data.dec(_f$links),
         navapi: data.dec(_f$navapi),
         form: data.dec(_f$form),
-        controller: data.dec(_f$controller));
+        controller: data.dec(_f$controller),
+        nextScreenController: data.dec(_f$nextScreenController));
   }
 
   @override
@@ -151,7 +157,8 @@ abstract class AppStateCopyWith<$R, $In extends AppState, $Out>
       List<Map<String, dynamic>>? links,
       Map<String, dynamic>? navapi,
       Map<String, dynamic>? form,
-      InAppWebViewController? controller});
+      InAppWebViewController? controller,
+      InAppWebViewController? nextScreenController});
   AppStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -188,7 +195,8 @@ class _AppStateCopyWithImpl<$R, $Out>
           List<Map<String, dynamic>>? links,
           Map<String, dynamic>? navapi,
           Map<String, dynamic>? form,
-          Object? controller = $none}) =>
+          Object? controller = $none,
+          Object? nextScreenController = $none}) =>
       $apply(FieldCopyWithData({
         if (appbar != null) #appbar: appbar,
         if (isLoading != null) #isLoading: isLoading,
@@ -200,7 +208,9 @@ class _AppStateCopyWithImpl<$R, $Out>
         if (links != null) #links: links,
         if (navapi != null) #navapi: navapi,
         if (form != null) #form: form,
-        if (controller != $none) #controller: controller
+        if (controller != $none) #controller: controller,
+        if (nextScreenController != $none)
+          #nextScreenController: nextScreenController
       }));
   @override
   AppState $make(CopyWithData data) => AppState(
@@ -214,7 +224,9 @@ class _AppStateCopyWithImpl<$R, $Out>
       links: data.get(#links, or: $value.links),
       navapi: data.get(#navapi, or: $value.navapi),
       form: data.get(#form, or: $value.form),
-      controller: data.get(#controller, or: $value.controller));
+      controller: data.get(#controller, or: $value.controller),
+      nextScreenController:
+          data.get(#nextScreenController, or: $value.nextScreenController));
 
   @override
   AppStateCopyWith<$R2, AppState, $Out2> $chain<$R2, $Out2>(

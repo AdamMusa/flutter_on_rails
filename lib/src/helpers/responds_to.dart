@@ -64,11 +64,15 @@ Future showNativeKeyboard(value) async {
   }
 }
 
-Widget setActionWidgetForForm(AppNotifier provider, payload) {
+Widget setActionWidgetForForm(
+  InAppWebViewController controller,
+  AppNotifier provider,
+  payload,
+) {
   if (Platform.isIOS) {
     return TextButton(
       onPressed: () async {
-        await provider.state.controller!.evaluateJavascript(
+        await controller.evaluateJavascript(
           source: """
           (function() {
             const button = document.getElementById('${provider.state.form["btn-id"]}');
