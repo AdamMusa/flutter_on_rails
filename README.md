@@ -18,7 +18,7 @@ Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flutter_on_rails: ^0.0.6.alpha
+  flutter_on_rails: ^0.0.7.alpha
 ```
 
 ## Quick Start
