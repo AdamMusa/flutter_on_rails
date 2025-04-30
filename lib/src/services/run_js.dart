@@ -1,3 +1,4 @@
+import 'package:flutter_on_rails/src/animation/dialog_animation.dart';
 import 'package:flutter_on_rails/src/imports/exports.dart';
 
 class RunJs {
@@ -72,7 +73,7 @@ class RunJs {
             ),
         "bottomsheet": () => showFlutterBottomSheet(context, payload),
         "snackbar": () => openSnackBar(context, payload),
-        "dialog": () => showFlutterDialog(context, payload),
+        "dialog": () => DialogAnimation.openDialog(context, payload),
         "share": () => share(payload),
       };
 
