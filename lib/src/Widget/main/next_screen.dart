@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_on_rails/src/helpers/responds_to.dart';
@@ -23,65 +24,84 @@ class NextPage extends StatelessWidget {
     return ListenableBuilder(
       listenable: provider,
       builder: (context, _) {
-        return SafeArea(
-          bottom: false,
-          child: Scaffold(
-            appBar:
-                provider.state.navapi["action"] != "replace"
-                    ? AppBar(
-                      backgroundColor: setBackgroundColor(provider),
-                      title: Text(
-                        setTitle(provider),
-                        style: TextStyle(color: setLeadingColor(provider)),
-                      ),
-                      leading: IconButton(
-                        color: setLeadingColor(provider),
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () async {
-                          provider.setNavigable(false);
-                          provider.state.controller!.goBack();
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      actions:
-                          provider.state.form.isEmpty
-                              ? null
-                              : [
-                                setActionWidgetForForm(
-                                  provider.state.nextScreenController!,
-                                  provider,
-                                  provider.state.form,
-                                ),
-                              ],
-                    )
-                    : null,
-            body: InAppWebView(
-              initialUrlRequest: URLRequest(url: WebUri(url)),
-              onWebViewCreated: (InAppWebViewController controller) async {
-                provider.setNextScreenController(controller);
-                controller.addJavaScriptHandler(
-                  handlerName: "inputFocus",
-                  callback: (args) async {
-                    final actionJson = args[0];
-                    _logger.info(
-                      "Received from JS: ${json.decode(actionJson.toString())}",
-                    );
-                  },
-                );
-              },
-              onLoadStart: (controller, url) async {
-                // Set appropriate user agent for the URL
-              },
-              onLoadStop: (controller, url) async {
-                await RunJs().handleForm(
-                  provider.state.nextScreenController!,
-                  provider,
-                );
-              },
-              shouldOverrideUrlLoading: (controller, navigationAction) async {
-                return NavigationActionPolicy.ALLOW;
-              },
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+
+          appBar:
+              provider.state.navapi["action"] != "replace"
+                  ? AppBar(
+                    backgroundColor: setBackgroundColor(provider),
+                    title: Text(
+                      setTitle(provider),
+                      style: TextStyle(color: setLeadingColor(provider)),
+                    ),
+                    leading: IconButton(
+                      color: setLeadingColor(provider),
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () async {
+                        provider.setNavigable(false);
+                        provider.state.controller!.loadUrl(
+                          urlRequest: URLRequest(
+                            url: WebUri(provider.state.currentUrl),
+                          ),
+                        );
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    actions:
+                        provider.state.form.isEmpty
+                            ? null
+                            : [
+                              setActionWidgetForForm(
+                                provider.state.nextScreenController!,
+                                provider,
+                                provider.state.form,
+                              ),
+                            ],
+                  )
+                  : null,
+          body: InAppWebView(
+            initialUrlRequest: URLRequest(url: WebUri(url)),
+            initialSettings: InAppWebViewSettings(
+              userAgent: userAgent,
+              // useHybridComposition: true,
+              isInspectable: kDebugMode,
+              javaScriptEnabled: true,
+              useShouldOverrideUrlLoading: true,
+              allowsLinkPreview: true,
+              allowsBackForwardNavigationGestures: true,
+              allowsInlineMediaPlayback: true,
+              mediaPlaybackRequiresUserGesture: false,
+              javaScriptCanOpenWindowsAutomatically: true,
+              supportZoom: true,
+              incognito: false,
+              cacheEnabled: true,
+              transparentBackground: false,
+              disableContextMenu: false,
+              disableHorizontalScroll: false,
+              disableVerticalScroll: false,
+              disableDefaultErrorPage: false,
+              useWideViewPort: true,
             ),
+            onWebViewCreated: (InAppWebViewController controller) async {
+              provider.setNextScreenController(controller);
+              await RunJs().handleForm(
+                provider.state.nextScreenController!,
+                provider,
+              );
+            },
+            onLoadStart: (controller, url) async {
+              // Set appropriate user agent for the URL
+            },
+            onLoadStop: (controller, url) async {
+              await RunJs().handleForm(
+                provider.state.nextScreenController!,
+                provider,
+              );
+            },
+            shouldOverrideUrlLoading: (controller, navigationAction) async {
+              return NavigationActionPolicy.ALLOW;
+            },
           ),
         );
       },

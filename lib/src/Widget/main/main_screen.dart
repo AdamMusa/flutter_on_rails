@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, deprecated_member_use
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_on_rails/src/Widget/bottom_navigation_bar.dart';
 import 'package:flutter_on_rails/src/Widget/custom_app_bar.dart';
 import 'package:flutter_on_rails/src/imports/exports.dart';
@@ -26,11 +27,6 @@ class _MainScreenState extends State<MainScreen> {
   bool isNavigating = false;
   String? defaultUserAgent;
   bool isLoaded = false;
-  bool isNotAuth = true;
-  bool hasShownAuthMessage = false;
-  String? lastProcessedUrl;
-  String? initialAuthUrl;
-  Map data = {};
   String userAgent =
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
   final provider = appstatemanager.notifier;
@@ -91,23 +87,34 @@ class _MainScreenState extends State<MainScreen> {
       return Container(color: Colors.red);
     }
 
-    return SafeArea(
-      bottom: false,
-      child: ListenableBuilder(
-        listenable: provider,
-        builder: (context, _) {
-          return Scaffold(
-            appBar:
-                provider.state.appbar != ''
-                    ? CustomAppBar(payload: provider.state.appbar)
-                    : null,
+    return ListenableBuilder(
+      listenable: provider,
+      builder: (context, _) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar:
+              provider.state.appbar != ''
+                  ? CustomAppBar(payload: provider.state.appbar)
+                  : null,
 
-            body: Stack(
+          body: SafeArea(
+            maintainBottomViewPadding: true,
+            bottom: false,
+            child: Stack(
               children: [
                 if (provider.state.isLoading)
                   const Center(child: CircularProgressIndicator.adaptive()),
                 InAppWebView(
                   initialUrlRequest: URLRequest(url: WebUri(widget.url!)),
+                  initialOptions: InAppWebViewGroupOptions(
+                    ios: IOSInAppWebViewOptions(
+                      allowsInlineMediaPlayback: true,
+                      allowsBackForwardNavigationGestures: true,
+                      allowsLinkPreview: true,
+                      isFraudulentWebsiteWarningEnabled: true,
+                      sharedCookiesEnabled: true,
+                    ),
+                  ),
                   initialSettings: InAppWebViewSettings(
                     userAgent: userAgent,
                     isInspectable: kDebugMode,
@@ -154,6 +161,25 @@ class _MainScreenState extends State<MainScreen> {
                         // You can parse and use this in Flutter
                       },
                     );
+                    // Add keyboard focus handler
+                    provider.state.controller!.addJavaScriptHandler(
+                      handlerName: "inputFocus",
+                      callback: (args) {
+                        SystemChannels.textInput.invokeMethod('TextInput.show');
+                      },
+                    );
+                    // Inject keyboard focus handling JavaScript
+                    await provider.state.controller!.evaluateJavascript(
+                      source: """
+                        (function() {
+                          document.addEventListener('focus', function(e) {
+                            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                              window.flutter_on_rails.callHandler('inputFocus');
+                            }
+                          }, true);
+                        })();
+                      """,
+                    );
                   },
                   onLoadStart: (controller, url) async {
                     // Set appropriate user agent for the URL
@@ -185,22 +211,24 @@ class _MainScreenState extends State<MainScreen> {
                     isLoaded = true;
                     pullToRefreshController?.endRefreshing();
                     provider.setLoading(false);
+                    final currentUrl = await controller.getUrl();
+                    provider.setCurrentUrl(currentUrl.toString());
                     await provider.state.controller!.evaluateJavascript(
                       source: """
-                            (function() {
-                              document.addEventListener("click", function(event) {
-                                // Correct selector for data_frails_action (with an underscore)
-                                const link = event.target.closest("a[data_frails_action]");
-                                console.log("Link clicked:", link);  // Check if the link is found
-                                if (!link) return;
-                                const action = link.getAttribute("data_frails_action");
-                                console.log("Action:", action); 
-                                if (window.flutter_on_rails) {
-                                  window.flutter_on_rails.callHandler('actionHandler', action);
-                                }
-                              });
-                            })();
-                          """,
+                                (function() {
+                                  document.addEventListener("click", function(event) {
+                                    // Correct selector for data_frails_action (with an underscore)
+                                    const link = event.target.closest("a[data_frails_action]");
+                                    console.log("Link clicked:", link);  // Check if the link is found
+                                    if (!link) return;
+                                    const action = link.getAttribute("data_frails_action");
+                                    console.log("Action:", action); 
+                                    if (window.flutter_on_rails) {
+                                      window.flutter_on_rails.callHandler('actionHandler', action);
+                                    }
+                                  });
+                                })();
+                              """,
                     );
                     await RunJs().runJavaScriptAndHideBottomNav(provider);
                   },
@@ -226,14 +254,15 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ],
             ),
-            bottomNavigationBar: buildBottomNavigationBar(
-              context,
-              provider,
-              widget.url!,
-            ),
-          );
-        },
-      ),
+          ),
+
+          bottomNavigationBar: buildBottomNavigationBar(
+            context,
+            provider,
+            widget.url!,
+          ),
+        );
+      },
     );
   }
 }

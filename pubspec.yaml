@@ -14,7 +14,6 @@ dependencies:
   # http: ^1.2.2
   font_awesome_flutter: ^10.7.0
   minimal_mvn: ^2.0.1
-  # url_launcher: ^6.3.1
   dart_mappable: ^4.5.0
 
 

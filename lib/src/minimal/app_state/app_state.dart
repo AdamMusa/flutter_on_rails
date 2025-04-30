@@ -16,6 +16,7 @@ class AppState with AppStateMappable {
     this.navapi = const {},
     this.form = const {},
     this.controller,
+    this.currentUrl = "",
     this.nextScreenController,
   });
   bool isLoading;
@@ -28,6 +29,7 @@ class AppState with AppStateMappable {
   Map<String, dynamic> navapi;
   Map<String, dynamic> form;
   String appbar;
+  String currentUrl;
   InAppWebViewController? controller;
   InAppWebViewController? nextScreenController;
 }

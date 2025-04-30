@@ -5,6 +5,7 @@ class AppNotifier extends MMNotifier<AppState> {
   AppNotifier() : super(AppState());
 
   void setFormData(value) => notify(state.copyWith(form: value));
+  void setCurrentUrl(value) => notify(state.copyWith(currentUrl: value));
   void setIsRedirected(value) => notify(state.copyWith(isRedirected: value));
 
   void setProgress(value) {

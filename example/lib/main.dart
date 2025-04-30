@@ -4,5 +4,5 @@ import 'package:flutter_on_rails/flutter_on_rails.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init();
-  runApp(MaterialApp(home: MainScreen()));
+  runApp(MaterialApp(home: MainScreen(url: "http://172.20.10.12:3000")));
 }

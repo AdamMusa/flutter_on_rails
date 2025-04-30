@@ -53,6 +53,9 @@ class AppStateMapper extends ClassMapperBase<AppState> {
   static InAppWebViewController? _$controller(AppState v) => v.controller;
   static const Field<AppState, InAppWebViewController> _f$controller =
       Field('controller', _$controller, opt: true);
+  static String _$currentUrl(AppState v) => v.currentUrl;
+  static const Field<AppState, String> _f$currentUrl =
+      Field('currentUrl', _$currentUrl, opt: true, def: "");
   static InAppWebViewController? _$nextScreenController(AppState v) =>
       v.nextScreenController;
   static const Field<AppState, InAppWebViewController> _f$nextScreenController =
@@ -71,6 +74,7 @@ class AppStateMapper extends ClassMapperBase<AppState> {
     #navapi: _f$navapi,
     #form: _f$form,
     #controller: _f$controller,
+    #currentUrl: _f$currentUrl,
     #nextScreenController: _f$nextScreenController,
   };
 
@@ -87,6 +91,7 @@ class AppStateMapper extends ClassMapperBase<AppState> {
         navapi: data.dec(_f$navapi),
         form: data.dec(_f$form),
         controller: data.dec(_f$controller),
+        currentUrl: data.dec(_f$currentUrl),
         nextScreenController: data.dec(_f$nextScreenController));
   }
 
@@ -158,6 +163,7 @@ abstract class AppStateCopyWith<$R, $In extends AppState, $Out>
       Map<String, dynamic>? navapi,
       Map<String, dynamic>? form,
       InAppWebViewController? controller,
+      String? currentUrl,
       InAppWebViewController? nextScreenController});
   AppStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -196,6 +202,7 @@ class _AppStateCopyWithImpl<$R, $Out>
           Map<String, dynamic>? navapi,
           Map<String, dynamic>? form,
           Object? controller = $none,
+          String? currentUrl,
           Object? nextScreenController = $none}) =>
       $apply(FieldCopyWithData({
         if (appbar != null) #appbar: appbar,
@@ -209,6 +216,7 @@ class _AppStateCopyWithImpl<$R, $Out>
         if (navapi != null) #navapi: navapi,
         if (form != null) #form: form,
         if (controller != $none) #controller: controller,
+        if (currentUrl != null) #currentUrl: currentUrl,
         if (nextScreenController != $none)
           #nextScreenController: nextScreenController
       }));
@@ -225,6 +233,7 @@ class _AppStateCopyWithImpl<$R, $Out>
       navapi: data.get(#navapi, or: $value.navapi),
       form: data.get(#form, or: $value.form),
       controller: data.get(#controller, or: $value.controller),
+      currentUrl: data.get(#currentUrl, or: $value.currentUrl),
       nextScreenController:
           data.get(#nextScreenController, or: $value.nextScreenController));
 

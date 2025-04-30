@@ -120,15 +120,14 @@ class RunJs {
         // You can also store it in a Provider
         provider.setFormData(formData);
 
-        // // Hide the button if it exists
+        // // // Hide the button if it exists
         // controller.evaluateJavascript(
         //   source: """
-        //   (function() {
-        //     const button = document.getElementById('${formData["btn-id"]}');
-        //     if (button) {
-        //       button.style.display = 'none';
-        //     }
-        //   })();
+        //  (function() {
+        //   const style = document.createElement('style');
+        //   style.innerHTML = "#${formData["btn-id"]} { display: none !important; }";
+        //   document.head.appendChild(style);
+        // })();
         // """,
         // );
       }
