@@ -168,18 +168,6 @@ class _MainScreenState extends State<MainScreen> {
                         SystemChannels.textInput.invokeMethod('TextInput.show');
                       },
                     );
-                    // Inject keyboard focus handling JavaScript
-                    await provider.state.controller!.evaluateJavascript(
-                      source: """
-                        (function() {
-                          document.addEventListener('focus', function(e) {
-                            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                              window.flutter_on_rails.callHandler('inputFocus');
-                            }
-                          }, true);
-                        })();
-                      """,
-                    );
                   },
                   onLoadStart: (controller, url) async {
                     // Set appropriate user agent for the URL
@@ -213,23 +201,7 @@ class _MainScreenState extends State<MainScreen> {
                     provider.setLoading(false);
                     final currentUrl = await controller.getUrl();
                     provider.setCurrentUrl(currentUrl.toString());
-                    await provider.state.controller!.evaluateJavascript(
-                      source: """
-                                (function() {
-                                  document.addEventListener("click", function(event) {
-                                    // Correct selector for data_frails_action (with an underscore)
-                                    const link = event.target.closest("a[data_frails_action]");
-                                    console.log("Link clicked:", link);  // Check if the link is found
-                                    if (!link) return;
-                                    const action = link.getAttribute("data_frails_action");
-                                    console.log("Action:", action); 
-                                    if (window.flutter_on_rails) {
-                                      window.flutter_on_rails.callHandler('actionHandler', action);
-                                    }
-                                  });
-                                })();
-                              """,
-                    );
+                    await RunJs().handleNav(provider);
                     await RunJs().runJavaScriptAndHideBottomNav(provider);
                   },
                   onUpdateVisitedHistory: (controller, url, isReload) async {

@@ -136,4 +136,37 @@ class RunJs {
       debugPrint('Error in handleForm: \$e');
     }
   }
+
+  handleNav(AppNotifier provider) {
+    provider.state.controller!.evaluateJavascript(
+      source: """
+      (function() {
+        document.addEventListener("click", function(event) {
+          // Correct selector for data_frails_action (with an underscore)
+          const link = event.target.closest("a[data_frails_navigation]");
+          console.log("Link clicked:", link);  // Check if the link is found
+          if (!link) return;
+          const action = link.getAttribute("data_frails_navigation");
+          console.log("Action:", action); 
+          if (window.flutter_on_rails) {
+            window.flutter_on_rails.callHandler('actionHandler', action);
+          }
+        });
+      })();
+    """,
+    );
+  }
+
+  // Inject keyboard focus handling JavaScript
+  // await provider.state.controller!.evaluateJavascript(
+  //   source: """
+  //     (function() {
+  //       document.addEventListener('focus', function(e) {
+  //         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+  //           window.flutter_on_rails.callHandler('inputFocus');
+  //         }
+  //       }, true);
+  //     })();
+  //   """,
+  // );
 }
