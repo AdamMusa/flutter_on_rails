@@ -4,8 +4,6 @@
 
 A powerful integration between Flutter and Ruby on Rails that enables seamless communication between web and mobile applications.
 
-![Flutter on Rails](https://raw.githubusercontent.com/AdamMusa/flutter_on_rails_cli/main/assets/splash.png)
-
 ## Features
 
 - 🔄 **Bi-directional Communication**: Seamless communication between Flutter and Rails
@@ -20,7 +18,7 @@ Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flutter_on_rails: ^0.0.3.alpha
+  flutter_on_rails: ^0.0.6.alpha
 ```
 
 ## Quick Start

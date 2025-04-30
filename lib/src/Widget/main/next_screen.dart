@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'dart:convert';
+import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -37,7 +38,11 @@ class NextPage extends StatelessWidget {
                     ),
                     leading: IconButton(
                       color: setLeadingColor(provider),
-                      icon: const Icon(Icons.arrow_back),
+                      icon: Icon(
+                        Platform.isIOS
+                            ? Icons.arrow_back_ios
+                            : Icons.arrow_back,
+                      ),
                       onPressed: () async {
                         provider.setNavigable(false);
                         provider.state.controller!.loadUrl(

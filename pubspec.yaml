@@ -1,6 +1,6 @@
 name: flutter_on_rails
 description: "Flutter on rails is the fastest way to bridge your web app with a Flutter-powered for cross plateform mobile and desktop app with ease and minimal changes, maximum freedom"
-version: 0.0.5-alpha
+version: 0.0.6-alpha
 homepage: https://github.com/AdamMusa/flutter_on_rails
 
 environment:
