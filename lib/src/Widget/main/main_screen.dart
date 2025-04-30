@@ -158,16 +158,17 @@ class _MainScreenState extends State<MainScreen> {
                       callback: (args) {
                         final actionJson = args[0]; // Your JSON string
                         provider.setNavApi(json.decode(actionJson));
+                        // RunJs().handleNav(provider);
                         // You can parse and use this in Flutter
                       },
                     );
-                    // Add keyboard focus handler
-                    provider.state.controller!.addJavaScriptHandler(
-                      handlerName: "inputFocus",
-                      callback: (args) {
-                        SystemChannels.textInput.invokeMethod('TextInput.show');
-                      },
-                    );
+                    // // Add keyboard focus handler
+                    // provider.state.controller!.addJavaScriptHandler(
+                    //   handlerName: "inputFocus",
+                    //   callback: (args) {
+                    //     SystemChannels.textInput.invokeMethod('TextInput.show');
+                    //   },
+                    // );
                   },
                   onLoadStart: (controller, url) async {
                     // Set appropriate user agent for the URL

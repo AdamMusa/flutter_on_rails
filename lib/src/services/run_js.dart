@@ -140,19 +140,20 @@ class RunJs {
   handleNav(AppNotifier provider) {
     provider.state.controller!.evaluateJavascript(
       source: """
-      (function() {
-        document.addEventListener("click", function(event) {
-          // Correct selector for data_frails_action (with an underscore)
-          const link = event.target.closest("a[data_frails_navigation]");
-          console.log("Link clicked:", link);  // Check if the link is found
-          if (!link) return;
-          const action = link.getAttribute("data_frails_navigation");
-          console.log("Action:", action); 
-          if (window.flutter_on_rails) {
-            window.flutter_on_rails.callHandler('actionHandler', action);
-          }
-        });
-      })();
+    (function() {
+      document.addEventListener("click", function(event) {
+        const link = event.target.closest("a[data_frails_navigation]");
+        console.log("Link clicked:", link);
+        if (!link) return;
+        const action = link.getAttribute("data_frails_navigation");
+        console.log("Ok i get the response here ...;:", action); 
+        if (window.flutter_on_rails && window.flutter_on_rails.callHandler) {
+          window.flutter_on_rails.callHandler('actionHandler', action);
+        } else {
+          console.warn("flutter_on_rails or callHandler is not defined");
+        }
+      });
+    })();
     """,
     );
   }

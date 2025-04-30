@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_on_rails:
     path: ../
+  # flutter_on_rails: ^0.0.3-alpha
 dev_dependencies:
   flutter_test:
     sdk: flutter

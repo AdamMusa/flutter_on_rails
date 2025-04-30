@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
-import 'dart:convert';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +7,6 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_on_rails/src/helpers/responds_to.dart';
 import 'package:flutter_on_rails/src/minimal/manager/manager.dart';
 import 'package:flutter_on_rails/src/services/run_js.dart';
-import 'package:logging/logging.dart';
-
-// Add at the top of the file, outside any class
-final _logger = Logger('NextScreen');
 
 class NextPage extends StatelessWidget {
   NextPage({super.key, required this.url});
@@ -19,7 +14,6 @@ class NextPage extends StatelessWidget {
   final String url;
   String userAgent =
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
-  InAppWebViewController? _controller;
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
@@ -103,7 +97,10 @@ class NextPage extends StatelessWidget {
                 provider.state.nextScreenController!,
                 provider,
               );
+              await RunJs().handleNav(provider);
+              await RunJs().runJavaScriptAndHideBottomNav(provider);
             },
+
             shouldOverrideUrlLoading: (controller, navigationAction) async {
               return NavigationActionPolicy.ALLOW;
             },

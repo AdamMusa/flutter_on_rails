@@ -12,9 +12,7 @@ enum Transition {
   rightToLeftWithFade,
   leftToRightWithFade,
   zoom,
-  // topLevel,
   cupertino,
   size,
   circularReveal,
-  // native,
 }
