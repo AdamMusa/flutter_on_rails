@@ -7,7 +7,7 @@ void main() async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainScreen(url: "http://172.20.10.12:3000/demo/native"),
+      home: MainScreen(url: "https://flutteronrails.com/demo/native"),
     ),
   );
 }

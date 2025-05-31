@@ -17,6 +17,8 @@ class AppState with AppStateMappable {
     this.form = const {},
     this.controller,
     this.currentUrl = "",
+    this.userAgent =
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     this.nextScreenController,
   });
   bool isLoading;
@@ -30,6 +32,7 @@ class AppState with AppStateMappable {
   Map<String, dynamic> form;
   String appbar;
   String currentUrl;
+  String userAgent;
   InAppWebViewController? controller;
   InAppWebViewController? nextScreenController;
 }

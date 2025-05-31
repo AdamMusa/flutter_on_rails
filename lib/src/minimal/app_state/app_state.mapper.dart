@@ -56,6 +56,12 @@ class AppStateMapper extends ClassMapperBase<AppState> {
   static String _$currentUrl(AppState v) => v.currentUrl;
   static const Field<AppState, String> _f$currentUrl =
       Field('currentUrl', _$currentUrl, opt: true, def: "");
+  static String _$userAgent(AppState v) => v.userAgent;
+  static const Field<AppState, String> _f$userAgent = Field(
+      'userAgent', _$userAgent,
+      opt: true,
+      def:
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
   static InAppWebViewController? _$nextScreenController(AppState v) =>
       v.nextScreenController;
   static const Field<AppState, InAppWebViewController> _f$nextScreenController =
@@ -75,6 +81,7 @@ class AppStateMapper extends ClassMapperBase<AppState> {
     #form: _f$form,
     #controller: _f$controller,
     #currentUrl: _f$currentUrl,
+    #userAgent: _f$userAgent,
     #nextScreenController: _f$nextScreenController,
   };
 
@@ -92,6 +99,7 @@ class AppStateMapper extends ClassMapperBase<AppState> {
         form: data.dec(_f$form),
         controller: data.dec(_f$controller),
         currentUrl: data.dec(_f$currentUrl),
+        userAgent: data.dec(_f$userAgent),
         nextScreenController: data.dec(_f$nextScreenController));
   }
 
@@ -164,6 +172,7 @@ abstract class AppStateCopyWith<$R, $In extends AppState, $Out>
       Map<String, dynamic>? form,
       InAppWebViewController? controller,
       String? currentUrl,
+      String? userAgent,
       InAppWebViewController? nextScreenController});
   AppStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -203,6 +212,7 @@ class _AppStateCopyWithImpl<$R, $Out>
           Map<String, dynamic>? form,
           Object? controller = $none,
           String? currentUrl,
+          String? userAgent,
           Object? nextScreenController = $none}) =>
       $apply(FieldCopyWithData({
         if (appbar != null) #appbar: appbar,
@@ -217,6 +227,7 @@ class _AppStateCopyWithImpl<$R, $Out>
         if (form != null) #form: form,
         if (controller != $none) #controller: controller,
         if (currentUrl != null) #currentUrl: currentUrl,
+        if (userAgent != null) #userAgent: userAgent,
         if (nextScreenController != $none)
           #nextScreenController: nextScreenController
       }));
@@ -234,6 +245,7 @@ class _AppStateCopyWithImpl<$R, $Out>
       form: data.get(#form, or: $value.form),
       controller: data.get(#controller, or: $value.controller),
       currentUrl: data.get(#currentUrl, or: $value.currentUrl),
+      userAgent: data.get(#userAgent, or: $value.userAgent),
       nextScreenController:
           data.get(#nextScreenController, or: $value.nextScreenController));
 

@@ -1,10 +1,11 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'dart:io' show Platform;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_on_rails/src/helpers/responds_to.dart';
+import 'package:flutter_on_rails/src/helpers/webview_helper.dart'
+    show inAppWebViewSettings;
 import 'package:flutter_on_rails/src/minimal/manager/manager.dart';
 import 'package:flutter_on_rails/src/services/run_js.dart';
 
@@ -12,8 +13,6 @@ class NextPage extends StatelessWidget {
   NextPage({super.key, required this.url});
   final provider = appstatemanager.notifier;
   final String url;
-  String userAgent =
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
@@ -61,27 +60,7 @@ class NextPage extends StatelessWidget {
                   : null,
           body: InAppWebView(
             initialUrlRequest: URLRequest(url: WebUri(url)),
-            initialSettings: InAppWebViewSettings(
-              userAgent: userAgent,
-              // useHybridComposition: true,
-              isInspectable: kDebugMode,
-              javaScriptEnabled: true,
-              useShouldOverrideUrlLoading: true,
-              allowsLinkPreview: true,
-              allowsBackForwardNavigationGestures: true,
-              allowsInlineMediaPlayback: true,
-              mediaPlaybackRequiresUserGesture: false,
-              javaScriptCanOpenWindowsAutomatically: true,
-              supportZoom: true,
-              incognito: false,
-              cacheEnabled: true,
-              transparentBackground: false,
-              disableContextMenu: false,
-              disableHorizontalScroll: false,
-              disableVerticalScroll: false,
-              disableDefaultErrorPage: false,
-              useWideViewPort: true,
-            ),
+            initialSettings: inAppWebViewSettings,
             onWebViewCreated: (InAppWebViewController controller) async {
               provider.setNextScreenController(controller);
               await RunJs().handleForm(
